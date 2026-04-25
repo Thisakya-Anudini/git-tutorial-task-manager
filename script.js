@@ -114,7 +114,7 @@ function renderTask(task) {
     del.dataset.id = task.id;
     del.setAttribute("aria-label", "Delete task");
     del.title = "Delete";
-    del.textContent = "Del";
+    del.textContent = "×";
 
     actions.appendChild(del);
 
