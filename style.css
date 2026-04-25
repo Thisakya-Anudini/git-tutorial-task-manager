@@ -82,11 +82,29 @@ body {
 }
 
 .card {
-    background: linear-gradient(180deg, var(--panel), rgba(255, 255, 255, 0.03));
-    border: 1px solid var(--border);
-    border-radius: 18px;
+    position: relative;
+    border: 1px solid transparent;
+    border-radius: var(--radius);
     box-shadow: var(--shadow);
     padding: 16px;
+    background:
+        linear-gradient(180deg, var(--panel), rgba(255, 255, 255, 0.03)) padding-box,
+        linear-gradient(135deg, rgba(110, 231, 255, 0.38), rgba(167, 139, 250, 0.28), rgba(255, 92, 122, 0.24)) border-box;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(600px 220px at 10% 0%, rgba(110, 231, 255, 0.12), transparent 55%);
+    opacity: 0.8;
+}
+
+.card > * {
+    position: relative;
+    z-index: 1;
 }
 
 .task-form {
@@ -167,9 +185,19 @@ button {
     gap: 10px;
     align-items: center;
     padding: 12px 12px;
-    border-radius: 14px;
-    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.14);
     background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+    transition: transform 140ms ease, border-color 140ms ease, background-color 140ms ease, box-shadow 140ms ease;
+    animation: taskIn 180ms ease-out;
+}
+
+.task:hover {
+    transform: translateY(-1px);
+    border-color: rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.065);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
 }
 
 .task__check {
@@ -177,6 +205,7 @@ button {
     height: 18px;
     accent-color: var(--accent);
     cursor: pointer;
+    border-radius: 6px;
 }
 
 .task__text {
@@ -188,6 +217,11 @@ button {
 .task--done .task__text {
     text-decoration: line-through;
     color: rgba(255, 255, 255, 0.58);
+}
+
+.task--done {
+    border-color: rgba(110, 231, 255, 0.16);
+    background: rgba(110, 231, 255, 0.06);
 }
 
 .task__actions {
