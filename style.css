@@ -10,10 +10,17 @@
     --accent-2: #a78bfa;
     --danger: #ff5c7a;
     --shadow: 0 14px 50px rgba(0, 0, 0, 0.45);
+    --shadow-soft: 0 10px 26px rgba(0, 0, 0, 0.28);
+    --ring: 0 0 0 4px rgba(110, 231, 255, 0.16);
+    --radius: 18px;
 }
 
 * {
     box-sizing: border-box;
+}
+
+html {
+    color-scheme: dark;
 }
 
 body {
@@ -27,6 +34,14 @@ body {
         var(--bg);
     min-height: 100vh;
     padding: 32px 16px;
+}
+
+.app,
+.card,
+.stat,
+.task {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
 }
 
 .app {
@@ -52,6 +67,7 @@ body {
     margin: 8px 0 0;
     color: var(--muted);
     line-height: 1.4;
+    max-width: 56ch;
 }
 
 .app__stats {
@@ -67,7 +83,14 @@ body {
     border-radius: 14px;
     padding: 10px 12px;
     min-width: 92px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--shadow-soft);
+    transition: transform 140ms ease, border-color 140ms ease, background-color 140ms ease;
+}
+
+.stat:hover {
+    transform: translateY(-1px);
+    border-color: rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.075);
 }
 
 .stat__label {
@@ -84,7 +107,7 @@ body {
 .card {
     background: linear-gradient(180deg, var(--panel), rgba(255, 255, 255, 0.03));
     border: 1px solid var(--border);
-    border-radius: 18px;
+    border-radius: var(--radius);
     box-shadow: var(--shadow);
     padding: 16px;
 }
@@ -104,10 +127,17 @@ body {
     color: var(--text);
     padding: 12px 12px;
     outline: none;
+    transition: box-shadow 140ms ease, border-color 140ms ease, background-color 140ms ease;
 }
 
 #task-input::placeholder {
     color: rgba(255, 255, 255, 0.45);
+}
+
+#task-input:focus {
+    border-color: rgba(110, 231, 255, 0.45);
+    box-shadow: var(--ring);
+    background: rgba(0, 0, 0, 0.24);
 }
 
 button {
@@ -129,6 +159,24 @@ button {
     border-color: rgba(255, 255, 255, 0.35);
 }
 
+#add-button:active {
+    transform: translateY(0px) scale(0.99);
+}
+
+.btn:focus-visible,
+.icon-btn:focus-visible,
+#add-button:focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+}
+
+.btn:disabled,
+#add-button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    filter: saturate(0.8);
+}
+
 .toolbar {
     display: flex;
     justify-content: flex-end;
@@ -142,10 +190,15 @@ button {
     color: var(--text);
     padding: 9px 12px;
     cursor: pointer;
+    transition: transform 120ms ease, filter 120ms ease, border-color 120ms ease, background-color 120ms ease;
 }
 
 .btn:hover {
     filter: brightness(1.08);
+}
+
+.btn:active {
+    transform: translateY(0px) scale(0.99);
 }
 
 .btn--danger {
@@ -170,6 +223,15 @@ button {
     border-radius: 14px;
     border: 1px solid var(--border);
     background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+    transition: transform 140ms ease, border-color 140ms ease, background-color 140ms ease;
+    animation: taskIn 180ms ease-out;
+}
+
+.task:hover {
+    transform: translateY(-1px);
+    border-color: rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.065);
 }
 
 .task__check {
@@ -177,6 +239,7 @@ button {
     height: 18px;
     accent-color: var(--accent);
     cursor: pointer;
+    border-radius: 6px;
 }
 
 .task__text {
@@ -188,6 +251,11 @@ button {
 .task--done .task__text {
     text-decoration: line-through;
     color: rgba(255, 255, 255, 0.58);
+}
+
+.task--done {
+    border-color: rgba(110, 231, 255, 0.16);
+    background: rgba(110, 231, 255, 0.06);
 }
 
 .task__actions {
@@ -203,15 +271,25 @@ button {
     background: rgba(255, 255, 255, 0.06);
     color: var(--text);
     cursor: pointer;
+    transition: transform 120ms ease, filter 120ms ease, border-color 120ms ease, background-color 120ms ease;
 }
 
 .icon-btn:hover {
     filter: brightness(1.12);
 }
 
+.icon-btn:active {
+    transform: scale(0.98);
+}
+
 .icon-btn--danger {
     border-color: rgba(255, 92, 122, 0.35);
     background: rgba(255, 92, 122, 0.12);
+}
+
+.icon-btn--danger:hover {
+    border-color: rgba(255, 92, 122, 0.55);
+    background: rgba(255, 92, 122, 0.18);
 }
 
 .empty {
@@ -245,6 +323,17 @@ button {
     border: 0;
 }
 
+@keyframes taskIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
 @media (max-width: 640px) {
     .app__header {
         flex-direction: column;
@@ -253,5 +342,13 @@ button {
 
     .app__stats {
         justify-content: flex-start;
+    }
+
+    .task-form {
+        grid-template-columns: 1fr;
+    }
+
+    #add-button {
+        width: 100%;
     }
 }
