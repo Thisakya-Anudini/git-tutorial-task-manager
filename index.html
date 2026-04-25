@@ -1,30 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <title>Anu</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Task Manager</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
-        <h1>
-            My Task Manager
-        </h1>
-        <form id="task-form">
-            <input type="text" id="task-input" placeholder="Enter a task">
+    <main class="app">
+        <header class="app__header">
+            <div>
+                <h1 class="app__title">My Task Manager</h1>
+                <p class="app__subtitle">Add tasks, mark them done, and delete what you don’t need.</p>
+            </div>
+            <div class="app__stats" aria-live="polite">
+                <div class="stat">
+                    <div class="stat__label">Total</div>
+                    <div class="stat__value" id="stat-total">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat__label">Done</div>
+                    <div class="stat__value" id="stat-done">0</div>
+                </div>
+            </div>
+        </header>
 
-            <button type="submit">Add Task</button>
+        <section class="card">
+            <form id="task-form" class="task-form" autocomplete="off">
+                <label class="sr-only" for="task-input">New task</label>
+                <input type="text" id="task-input" placeholder="What do you want to do today?" maxlength="120" />
+                <button type="submit" id="add-button">Add</button>
+            </form>
 
-        </form>
-        <ul id="task-list"></ul>
+            <div class="toolbar">
+                <button id="clear-button" class="btn btn--danger" type="button">Clear All</button>
+            </div>
 
-        <button id="clear-button">Clear Tasks</button>
-        
+            <ul id="task-list" class="task-list" aria-label="Tasks"></ul>
+            <div id="empty-state" class="empty" hidden>
+                <div class="empty__title">No tasks yet</div>
+                <div class="empty__hint">Add your first task using the input above.</div>
+            </div>
+        </section>
+    </main>
 
-        
-        <script src="script.js"></script>
-
-   
-    
+    <script src="script.js"></script>
 </body>
 </html>
