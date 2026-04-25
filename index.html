@@ -7,41 +7,54 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <main class="app">
+    <a class="sr-only" href="#task-input">Skip to add task</a>
+
+    <main class="app" role="main">
         <header class="app__header">
-            <div>
-                <h1 class="app__title">My Task Manager</h1>
+            <section aria-labelledby="app-title">
+                <h1 class="app__title" id="app-title">My Task Manager</h1>
                 <p class="app__subtitle">Add tasks, mark them done, and delete what you don’t need.</p>
-            </div>
-            <div class="app__stats" aria-live="polite">
-                <div class="stat">
+            </section>
+
+            <section class="app__stats" aria-label="Task statistics" aria-live="polite">
+                <div class="stat" role="group" aria-label="Total tasks">
                     <div class="stat__label">Total</div>
                     <div class="stat__value" id="stat-total">0</div>
                 </div>
-                <div class="stat">
+                <div class="stat" role="group" aria-label="Completed tasks">
                     <div class="stat__label">Done</div>
                     <div class="stat__value" id="stat-done">0</div>
                 </div>
-            </div>
+            </section>
         </header>
 
-        <section class="card">
+        <section class="card" aria-label="Task input and list">
             <form id="task-form" class="task-form" autocomplete="off">
                 <label class="sr-only" for="task-input">New task</label>
-                <input type="text" id="task-input" placeholder="What do you want to do today?" maxlength="120" />
-                <button type="submit" id="add-button">Add</button>
+                <input
+                    type="text"
+                    id="task-input"
+                    placeholder="What do you want to do today?"
+                    maxlength="120"
+                    inputmode="text"
+                />
+                <button type="submit" id="add-button">Add Task</button>
             </form>
 
-            <div class="toolbar">
+            <div class="toolbar" role="group" aria-label="List actions">
                 <button id="clear-button" class="btn btn--danger" type="button">Clear All</button>
             </div>
 
-            <ul id="task-list" class="task-list" aria-label="Tasks"></ul>
-            <div id="empty-state" class="empty" hidden>
-                <div class="empty__title">No tasks yet</div>
-                <div class="empty__hint">Add your first task using the input above.</div>
-            </div>
+            <section aria-label="Tasks">
+                <ul id="task-list" class="task-list"></ul>
+                <div id="empty-state" class="empty" hidden>
+                    <div class="empty__title">No tasks yet</div>
+                    <div class="empty__hint">Add your first task using the input above.</div>
+                </div>
+            </section>
         </section>
+
+        <footer class="sr-only" aria-hidden="true">Task Manager</footer>
     </main>
 
     <script src="script.js"></script>
