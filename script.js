@@ -1,16 +1,21 @@
-console.log("hello world");
+const taskForm = document.getElementById('task-form');
+const taskInput = document.getElementById('task-input');
+const taskList = document.getElementById('task-list');
+const clearButton = document.getElementById('clear-button');
 
-const form = document.getElementById("task-form");
-const taskInput = document.getElementById("task-input");
-const taskList = document.getElementById("task-list");
-form.addEventListener("submit", function(event) {
-    event.preventDefault();
+taskForm.addEventListener('submit', function(e) {
+    e.preventDefault();
     const taskText = taskInput.value.trim();
-    if (taskText !== "") {
-        const listItem = document.createElement("li");
-        listItem.textContent = taskText;
-        taskList.appendChild(listItem);
-        taskInput.value = "";
-    }
-    
+    if (taskText !== '') {
+        const taskItem = document.createElement('li');
+        taskItem.textContent = taskText;
+        taskList.appendChild(taskItem);
+        taskInput.value = '';
+    }    
 });
+
+clearButton.addEventListener('click', function() {
+    taskList.innerHTML = '';
+});
+
+
