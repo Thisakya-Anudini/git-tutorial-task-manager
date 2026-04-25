@@ -1,0 +1,14 @@
+body{
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-size: 40px;
+    font-family: 'Courier New', Courier, monospace;
+
+
+}
+h1{
+    color: red;
+    text-decoration: underline;
+    
+}
